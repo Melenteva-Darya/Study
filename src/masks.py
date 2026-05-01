@@ -10,9 +10,9 @@ def get_mask_card_number(card_number: str) -> str:
     return " ".join(list_numbers)
 
 
-card_number = input("Введите номер карты: ")
-print(get_mask_card_number(card_number))
-
+# card_number = input("Введите номер карты: ")
+# print(get_mask_card_number(card_number))
+#
 
 def get_mask_account(score: str) -> str:
     """ Функция маскирует номер счета"""
@@ -24,6 +24,6 @@ def get_mask_account(score: str) -> str:
         result_score = "**" + list_score[-1]
     return "".join(result_score)
 
-
-score = input("Введите номер карты: ")
-print(get_mask_account(score))
+#
+# score = input("Введите номер карты: ")
+# print(get_mask_account(score))
