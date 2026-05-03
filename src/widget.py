@@ -15,6 +15,8 @@ def mask_account_card(payment_method: str) -> str:
                 return "Ошибка: неверное количество цифр (нужно 16 или 20)!"
         elif method.isalpha():
             list_result.append(method)
+        elif not payment_method:
+            return "Ошибка: пустая строка!"
         else:
             return f"Ошибка: строка {method} содержит недопустимые символы!"
 
