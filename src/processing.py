@@ -1,6 +1,6 @@
 def filter_by_state(list_state: list[dict], state: str = "EXECUTED") -> list[dict]:
     """Функция выводит список словарей, содержащие только те словари, у которых ключ
-\'state\' соответствует указанному значению."""
+state соответствует указанному значению."""
     result_state = []
     for dictionary in list_state:
         if dictionary["state"] == state:
