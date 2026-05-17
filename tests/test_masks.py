@@ -1,5 +1,6 @@
 from src.masks import get_mask_card_number, get_mask_account
 
+
 def test_mask_card_1(card_1):
     assert get_mask_card_number("1234123412341234") == card_1
 
