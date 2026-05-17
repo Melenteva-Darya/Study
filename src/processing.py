@@ -19,7 +19,7 @@ def filter_by_state(list_state: list[dict[str, Any]], state: str = "EXECUTED") -
     return result_state
 
 
-def sort_by_date(list_data: list[dict[str, Any]], reverse=True) -> Any:
+def sort_by_date(list_data: list[dict[str, Any]], reverse: bool | str = True) -> list[dict[str, Any]] | str:
     """Функция сортирует список по дате"""
 
     if not list_data:
@@ -27,12 +27,12 @@ def sort_by_date(list_data: list[dict[str, Any]], reverse=True) -> Any:
 
     if reverse == "":
         reverse = True
+    for x in list_data:
+        if "date" not in x:
+            return "Ошибка: неверный формат даты в списке!"
 
-    result_data = sorted(list_data, key=lambda x: x["date"], reverse=reverse)
-    return result_data
+            # Проверяем, что дата — это строка и в ней есть два дефиса
+        if not isinstance(x["date"], str) or x["date"].count("-") < 2:
+            return "Ошибка: неверный формат даты в списке!"
 
-
-print(sort_by_date([{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
-       {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
-       {'id': 594226727, 'state': 'CANCELED', 'date': '2018-06-30T21:27:25.241689'},
-       {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}]))
+    return sorted(list_data, key=lambda x: x["date"], reverse=bool(reverse))

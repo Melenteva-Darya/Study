@@ -1,31 +1,40 @@
+from typing import Any
+
 import pytest
 
+
 @pytest.fixture
-def card_1():
+def card_1() -> str:
     return "1234 12** **** 1234"
 
-@pytest.fixture
-def card_empty_line():
-    return "Ошибка: пустая строка!"
 
 @pytest.fixture
-def card_more_or_less():
+def card_empty_line() -> str:
+    return "Ошибка: пустая строка!"
+
+
+@pytest.fixture
+def card_more_or_less() -> str:
     return "Ошибка: неверное количество цифр (нужно 16)!"
 
+
 @pytest.fixture
-def account_1():
+def account_1() -> str:
     return "**1234"
 
+
 @pytest.fixture
-def account_empty_line():
+def account_empty_line() -> str:
     return "Ошибка: пустая строка!"
 
-@pytest.fixture
-def account_more_or_less():
-    return "Ошибка: неверное количество цифр (нужно 20)!"
 
 @pytest.fixture
-def input_argument_list():
+def account_more_or_less() -> str:
+    return "Ошибка: неверное количество цифр (нужно 20)!"
+
+
+@pytest.fixture
+def input_argument_list() -> list[dict[str, Any]]:
     return [
         {'id': 414288290, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
         {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
