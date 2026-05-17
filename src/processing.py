@@ -1,13 +1,21 @@
 from typing import Any
 
 
-def filter_by_state(list_state: list[dict[str, Any]], state: str = "EXECUTED") -> list[dict[str, Any]]:
+def filter_by_state(list_state: list[dict[str, Any]], state: str = "EXECUTED") -> Any:
     """Функция выводит список словарей, содержащие только те словари, у которых ключ
     state соответствует указанному значению."""
+
+    if not list_state:
+        return "Ошибка: список пуст!"
+
+    if state == "":
+        state = "EXECUTED"
+
     result_state = []
     for dictionary in list_state:
         if dictionary["state"] == state:
             result_state.append(dictionary)
+
     return result_state
 
 
