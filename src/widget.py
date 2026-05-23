@@ -1,4 +1,4 @@
-from masks import get_mask_account, get_mask_card_number
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(payment_method: str) -> str:
@@ -18,14 +18,32 @@ def mask_account_card(payment_method: str) -> str:
         elif not payment_method:
             return "Ошибка: пустая строка!"
         else:
-            return f"Ошибка: строка {method} содержит недопустимые символы!"
+            return "Ошибка: строка содержит недопустимые символы!"
 
     return " ".join(list_result)
 
 
 def get_date(iso_format: str) -> str:
-    list_iso_format = iso_format.split("T")
-    for numbers in list_iso_format:
-        year, month, day = numbers.split("-")
+    iso_format = iso_format.strip()
 
-        return f"{day}.{month}.{year}"
+    if not iso_format:
+        return "Ошибка: пустая строка!"
+
+    if "T" in iso_format:
+        date_part = iso_format.split("T")[0]
+        date_part = date_part.split(" ")[-1]
+    else:
+        date_part = iso_format.split(" ")[-1]
+
+    if date_part.count("-") != 2:
+        return "Ошибка: неверный формат даты!"
+
+    parts = date_part.split("-")
+    year = parts[0]
+    month = parts[1]
+    day = parts[2]
+
+    if not (year.isdigit() and month.isdigit() and day.isdigit()) or len(year) != 4:
+        return "Ошибка: неверный формат даты!"
+
+    return f"{day}.{month}.{year}"
