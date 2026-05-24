@@ -1,6 +1,6 @@
 import pytest
 
-from src.generators import filter_by_currency
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 
 
 @pytest.mark.parametrize("target_currency, expected_transactions",
@@ -37,7 +37,6 @@ from src.generators import filter_by_currency
                              "to": "Visa Platinum 8990922113665229",
                              }, ],),
                           ("EUR", [],), ], )
-
 def test_filter_by_currency_full_data(sample_transactions, target_currency, expected_transactions):
     """Проверяет фильтрацию по валюте и отсутствие совпадений."""
     usd_transactions = filter_by_currency(sample_transactions, target_currency)
@@ -48,13 +47,77 @@ def test_filter_by_currency_full_data(sample_transactions, target_currency, expe
 
 @pytest.mark.parametrize(
     "invalid_input",
-    [ [],  # Пустой список
-      [{"id": 123, "description": "Транзакция без блока operationAmount"}],
-    ], )
-
+    [[],  # Пустой список
+     [{"id": 123, "description": "Транзакция без блока operationAmount"}],
+     ], )
 def test_filter_by_currency_empty_and_corrupted_data(invalid_input):
     """Пустой список или списка без валютной операции."""
     result_iterator = filter_by_currency(invalid_input, "USD")
     result_list = list(result_iterator)
 
     assert result_list == []
+
+
+def test_transaction_descriptions_correct_yield(sample_transactions):
+    """Генератор поочередно выдает описания каждой операции."""
+    descriptions = transaction_descriptions(sample_transactions)
+
+    assert next(descriptions) == "Перевод организации"
+    assert next(descriptions) == "Перевод со счета на счет"
+    assert next(descriptions) == "Перевод со счета на счет"
+    assert next(descriptions) == "Перевод с карты на карту"
+    assert next(descriptions) == "Перевод организации"
+
+
+def test_transaction_descriptions_empty_list():
+    """Проверяет с пустым списком."""
+    descriptions = transaction_descriptions([])
+
+    with pytest.raises(StopIteration):
+        next(descriptions)
+
+
+def test_transaction_descriptions_missing_key():
+    """Проверяет, что код не падает, если у транзакции нет ключа 'description'."""
+    corrupted_data = [{"id": 111}]
+    descriptions = transaction_descriptions(corrupted_data)
+
+    assert next(descriptions) == ""
+
+
+@pytest.mark.parametrize("start, stop, expected_list",
+                         [(1, 3, ["0000 0000 0000 0001",
+                                  "0000 0000 0000 0002",
+                                  "0000 0000 0000 0003",
+                                  ],),
+                          (99, 99, ["0000 0000 0000 0099"]),
+                          (9, 11, ["0000 0000 0000 0009", "0000 0000 0000 0010", "0000 0000 0000 0011"]),
+                          ],
+                         )
+def test_card_number_generator_correct_output(start, stop, expected_list):
+    """Проверяет, что генератор выдает правильные номера в заданном диапазоне
+    и корректно форматирует их (пробелы и нули).
+    """
+    result_generator = card_number_generator(start, stop)
+    actual_list = list(result_generator)
+
+    assert actual_list == expected_list
+
+
+def test_card_number_generator_stops_correctly():
+    """Убеждается, что генератор правильно завершает генерацию (вызывает StopIteration)
+    после выдачи последнего элемента диапазона."""
+    generator = card_number_generator(1, 2)
+
+    assert next(generator) == "0000 0000 0000 0001"
+    assert next(generator) == "0000 0000 0000 0002"
+
+    with pytest.raises(StopIteration):
+        next(generator)
+
+
+def test_card_number_generator_invalid_range():
+    """Проверяет поведение генератора, если начальное значение больше конечного."""
+    generator = card_number_generator(5, 1)
+
+    assert list(generator) == []
