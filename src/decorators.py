@@ -1,15 +1,16 @@
 import functools
+from typing import Any, Callable, Optional
 
 
-def log(*, filename=None):
+def log(filename: Optional[str] = None) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
     """Декоратор log автоматически логирует начало и конец выполнения функции,
-       а также ее результаты или возникшие ошибки.
-       Параметры: filename (str, optional):
-       Путь к файлу для записи логов. Если не задан, логи выводятся в консоль."""
+    а также ее результаты или возникшие ошибки.
+    Параметры: filename (str, optional):
+    Путь к файлу для записи логов. Если не задан, логи выводятся в консоль."""
 
-    def my_decorator(func):
+    def my_decorator(func: Callable[..., Any]) -> Callable[..., Any]:
         @functools.wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
             func_name = func.__name__
 
             try:

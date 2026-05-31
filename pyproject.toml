@@ -65,5 +65,5 @@ warn_unreachable = true
 exclude = 'venv'
 
 [tool.pytest.ini_options]
-addopts = "--cov=src --cov-report=term-missing --cov-report=html"
+addopts = "--cov=src --cov-report=term-missing"
 testpaths = ["tests"]

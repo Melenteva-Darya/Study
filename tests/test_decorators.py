@@ -1,30 +1,31 @@
 import os
+
 import pytest
+from _pytest.capture import CaptureFixture
+
 from src.decorators import log
 
 
-def test_console_success(capsys):
+def test_console_success(capsys: CaptureFixture[str]) -> None:
     """Тест успешного выполнения функции с выводом в консоль"""
 
     @log()
-    def add(a, b):
+    def add(a: int, b: int) -> int:
         return a + b
 
     result = add(3, 5)
 
-    # Проверяем возвращаемое значение функции
     assert result == 8
 
-    # Перехватываем print() с помощью capsys
     captured = capsys.readouterr()
     assert captured.out == "add ok\n"
 
 
-def test_console_error(capsys):
+def test_console_error(capsys: CaptureFixture[str]) -> None:
     """Тест перехвата исключения с выводом в консоль"""
 
     @log()
-    def divide(a, b):
+    def divide(a: int, b: int) -> float:
         return a / b
 
     with pytest.raises(ZeroDivisionError):
@@ -34,12 +35,12 @@ def test_console_error(capsys):
     assert captured.out == "divide error: ZeroDivisionError. Inputs: (10, 0), {}\n"
 
 
-def test_file_success(capsys):
+def test_file_success(capsys: CaptureFixture[str]) -> None:
     """Тест успешного выполнения функции с записью в файл"""
     filename = "test_success.log"
 
     @log(filename=filename)
-    def greet(name):
+    def greet(name: str) -> str:
         return f"Hello, {name}"
 
     try:
@@ -57,12 +58,12 @@ def test_file_success(capsys):
             os.remove(filename)
 
 
-def test_file_error(capsys):
+def test_file_error(capsys: CaptureFixture[str]) -> None:
     """Тест перехвата исключения с записью в файл"""
     filename = "test_error.log"
 
     @log(filename=filename)
-    def get_element(lst, index):
+    def get_element(lst: list[int], index: int) -> int:
         return lst[index]
 
     try:
