@@ -63,3 +63,7 @@ check_untyped_defs = true
 strict = true
 warn_unreachable = true
 exclude = 'venv'
+
+[tool.pytest.ini_options]
+addopts = "--cov=src --cov-report=term-missing --cov-report=html"
+testpaths = ["tests"]
