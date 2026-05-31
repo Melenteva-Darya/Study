@@ -3,7 +3,7 @@ def get_mask_card_number(card_number: str) -> str:
     list_numbers = []
     if len(card_number) == 16:
         for i in range(0, len(card_number), 4):
-            numbers = card_number[i: i + 4]
+            numbers = card_number[i : i + 4]
             list_numbers.append(numbers)
         if len(list_numbers) >= 4:
             list_numbers[1] = list_numbers[1][:2] + "**"
@@ -21,7 +21,7 @@ def get_mask_account(score: str) -> str:
     list_score = []
     if len(score) == 20:
         for i in range(0, len(score), 4):
-            numbers = score[i: i + 4]
+            numbers = score[i : i + 4]
             list_score.append(numbers)
         if len(list_score) >= 4:
             result_score = "**" + list_score[-1]
