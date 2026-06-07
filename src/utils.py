@@ -20,5 +20,5 @@ def get_financial_transactions(file_path: str) -> Union[list[Any], str]:
             if isinstance(data, list):
                 return data
             return []
-    except JSONDecodeError, PermissionError, FileNotFoundError:
+    except (JSONDecodeError, PermissionError, FileNotFoundError):
         return []
