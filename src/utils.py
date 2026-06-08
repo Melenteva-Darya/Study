@@ -9,12 +9,12 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 path_to_file = os.path.abspath(os.path.join(script_dir, "..", "data", "operations.json"))
 
 log_dir = os.path.abspath(os.path.join(script_dir, "..", "logs"))
-log_file_path = os.path.join(log_dir, "masks.log")
+log_file_path = os.path.join(log_dir, "utils.log")
 
 
 utils_logger = logging.getLogger(__name__)
 utils_logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler("logs/masks.log")
+file_handler = logging.FileHandler("logs/utils.log")
 
 file_formatter = logging.Formatter('%(asctime)s %(filename)s %(levelname)s: %(message)s')
 file_handler.setFormatter(file_formatter)

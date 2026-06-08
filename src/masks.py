@@ -1,3 +1,21 @@
+import os
+import logging
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+log_dir = os.path.abspath(os.path.join(script_dir, "..", "logs"))
+log_file_path = os.path.join(log_dir, "masks.log")
+
+utils_logger = logging.getLogger(__name__)
+utils_logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler("logs/masks.log")
+
+file_formatter = logging.Formatter('%(asctime)s %(filename)s %(levelname)s: %(message)s')
+file_handler.setFormatter(file_formatter)
+
+utils_logger.addHandler(file_handler)
+utils_logger.debug('Debug message')
+
+
 def get_mask_card_number(card_number: str) -> str:
     """Функция маскирует номер карты"""
     list_numbers = []
