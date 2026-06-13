@@ -31,11 +31,11 @@ def get_mask_card_number(card_number: str) -> str:
 
     elif not card_number:
         utils_logger.warning("Ошибка: пустая строка")
-        return "Внимание пустая строка!"
+        return "Ошибка: пустая строка!"
 
     else:
         utils_logger.warning("Ошибка: неверное количество цифр")
-        return "Внимание: неверное количество цифр (нужно 16)!"
+        return "Ошибка: неверное количество цифр (нужно 16)!"
 
     utils_logger.info("Программа успешно завершена")
     return " ".join(list_numbers)
@@ -57,7 +57,7 @@ def get_mask_account(score: str) -> str:
         return "".join(result_score)
     elif not score:
         utils_logger.warning("Ошибка: пустая строка")
-        return "Внимание пустая строка!"
+        return "Ошибка: пустая строка!"
     else:
         utils_logger.error("Ошибка: неверное количество цифр (нужно 20)!")
-        return "Внимание: неверное количество цифр (нужно 20)!"
+        return "Ошибка: неверное количество цифр (нужно 20)!"

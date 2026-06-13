@@ -28,8 +28,12 @@ def read_csv_file(file_path_csv: str) -> DataFrame | list[Any]:
         transactions_file = pd.read_csv(final_path, encoding="utf-8")
         return transactions_file
 
-    except Exception as e:
+    except (FileNotFoundError, pd.errors.EmptyDataError, pd.errors.ParserError, LookupError) as e:
+        print(f"Ошибка при чтении CSV-файла: {e}")
         return pd.DataFrame()
+    # except Exception as e:
+    #     print(f"Непредвиденная ошибка: {e}")
+    #     return pd.DataFrame()
 
 
 def read_excel_file(file_path_excel: str) -> DataFrame:
@@ -55,5 +59,6 @@ def read_excel_file(file_path_excel: str) -> DataFrame:
         transactions_file = pd.read_excel(final_path)
         return transactions_file
 
-    except Exception as e:
+    except (FileNotFoundError, ValueError, TypeError, ImportError) as e:
+        print(f"Ошибка при чтении Excel-файла: {e}")
         return pd.DataFrame()
