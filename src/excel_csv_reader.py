@@ -7,7 +7,7 @@ from pandas import DataFrame
 
 def read_csv_file(file_path_csv: str) -> DataFrame | list[Any]:
     """Загружает CSV-файл в Pandas DataFrame.
-        Принимает как полный абсолютный путь, так и просто имя файла."""
+    Принимает как полный абсолютный путь, так и просто имя файла."""
     if os.path.isfile(file_path_csv):
         final_path = file_path_csv
 
@@ -38,7 +38,7 @@ def read_csv_file(file_path_csv: str) -> DataFrame | list[Any]:
 
 def read_excel_file(file_path_excel: str) -> DataFrame:
     """Загружает Exel-файл в Pandas DataFrame.
-        Принимает как полный абсолютный путь, так и просто имя файла."""
+    Принимает как полный абсолютный путь, так и просто имя файла."""
     if os.path.isfile(file_path_excel):
         final_path = file_path_excel
 
