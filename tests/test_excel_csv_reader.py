@@ -3,7 +3,8 @@ from unittest.mock import patch
 
 import pandas as pd
 
-from src.excel_csv_reader import read_csv_file, read_excel_file
+from src.excel_csv_reader import read_csv_file
+from src.excel_csv_reader import read_excel_file
 
 
 @patch("src.excel_csv_reader.os.path.isfile")

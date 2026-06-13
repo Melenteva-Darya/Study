@@ -1,6 +1,7 @@
 from typing import Any
 
-from src.masks import get_mask_account, get_mask_card_number
+from src.masks import get_mask_account
+from src.masks import get_mask_card_number
 
 
 def test_mask_card_1(card_1: Any) -> None:
