@@ -2,7 +2,8 @@ import json
 import logging
 import os
 from json import JSONDecodeError
-from typing import Any, Union
+from typing import Any
+from typing import Union
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 path_to_file = os.path.abspath(os.path.join(script_dir, "..", "data", "operations.json"))

@@ -2,7 +2,8 @@ from typing import Any
 
 import pytest
 
-from src.processing import filter_by_state, sort_by_date
+from src.processing import filter_by_state
+from src.processing import sort_by_date
 
 
 @pytest.mark.parametrize(

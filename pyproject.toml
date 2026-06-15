@@ -8,7 +8,8 @@ authors = [
 requires-python = ">=3.14"
 dependencies = [
     "python-dotenv (>=1.2.2,<2.0.0)",
-    "requests (>=2.34.2,<3.0.0)"
+    "requests (>=2.34.2,<3.0.0)",
+    "pandas (>=3.0.3,<4.0.0)"
 ]
 
 [tool.poetry]
@@ -27,7 +28,8 @@ lint = [
 ]
 dev = [
     "pytest (>=9.0.3,<10.0.0)",
-    "pytest-cov (>=7.1.0,<8.0.0)"
+    "pytest-cov (>=7.1.0,<8.0.0)",
+    "pandas-stubs (>=3.0.3.260530,<4.0.0.0)"
 ]
 
 [tool.black]
@@ -53,11 +55,7 @@ exclude = '''
 [tool.isort]
 profile = "black"
 line_length = 119
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-ensure_newline_before_comments = true
+force_single_line = true
 
 [tool.mypy]
 disallow_untyped_defs = true
