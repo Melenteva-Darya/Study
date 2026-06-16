@@ -93,3 +93,32 @@ def sample_transactions() -> list[dict[str, Any]]:
             "to": "Счет 14211924144426031657",
         },
     ]
+
+@pytest.fixture
+def sample_transactions_2():
+    return [
+        {
+            "id": 111,
+            "state": "EXECUTED",
+            "date": "2019-12-08",
+            "description": "Перевод организации"
+        },
+        {
+            "id": 222,
+            "state": "CANCELED",
+            "date": "2023-05-10",
+            "description": "Открытие вклада"
+        },
+        {
+            "id": 333,
+            "state": "EXECUTED",
+            "date": "2026-01-15",
+            "description": "Перевод организации"
+        },
+        {
+            "id": 444,
+            "state": "PENDING",
+            "date": "2026-06-16",
+            "description": None  # Тест на пропущенное описание
+        }
+    ]
