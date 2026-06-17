@@ -35,4 +35,4 @@ def sort_by_date(list_data: list[dict[str, Any]], reverse: bool | str = True) ->
         if not isinstance(x["date"], str) or x["date"].count("-") < 2:
             return "Ошибка: неверный формат даты в списке!"
 
-    return sorted(list_data, key=lambda x: x["date"], reverse=bool(reverse))
+    return sorted(list_data, key=lambda y: y["date"], reverse=bool(reverse))
