@@ -1,8 +1,9 @@
 import re
 from collections import Counter
+from typing import Any
 
 
-def process_bank_search(data:list[dict], search:str)-> list[dict]:
+def process_bank_search(data: list[dict[str, Any]], search: str) -> list[dict[str, Any]]:
     """Универсальный поиск по всем полям. Приводит любые типы к строке."""
     dictionary_search = []
 
@@ -15,11 +16,11 @@ def process_bank_search(data:list[dict], search:str)-> list[dict]:
     return dictionary_search
 
 
-def process_bank_operations(data:list[dict], categories:list)-> dict:
+def process_bank_operations(data: list[dict[str, Any]], categories: list[str]) -> dict[str, int]:
     """Подсчитывает количество операций для каждой заданной категории из поля description."""
     all_descriptions = [dict_.get("description", "") for dict_ in data]
 
-    #  подсчитываем частота всех описаний в одну строчку
+    # Подсчитываем частоту всех описаний в одну строчку
     counted_data = Counter(all_descriptions)
 
     # Собираем итоговый словарь. Если категории нет в файле — ставим 0

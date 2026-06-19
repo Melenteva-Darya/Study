@@ -5,36 +5,43 @@ import pytest
 
 @pytest.fixture
 def card_1() -> str:
+    """Возвращает корректно замаскированный номер банковской карты для тестов."""
     return "1234 12** **** 1234"
 
 
 @pytest.fixture
 def card_empty_line() -> str:
+    """Возвращает сообщение об ошибке при передаче пустой строки вместо номера карты."""
     return "Ошибка: пустая строка!"
 
 
 @pytest.fixture
 def card_more_or_less() -> str:
+    """Возвращает сообщение об ошибке при неверной длине номера карты."""
     return "Ошибка: неверное количество цифр (нужно 16)!"
 
 
 @pytest.fixture
 def account_1() -> str:
+    """Возвращает корректно замаскированный номер банковского счета для тестов."""
     return "**1234"
 
 
 @pytest.fixture
 def account_empty_line() -> str:
+    """Возвращает сообщение об ошибке при передаче пустой строки вместо номера счета."""
     return "Ошибка: пустая строка!"
 
 
 @pytest.fixture
 def account_more_or_less() -> str:
+    """Возвращает сообщение об ошибке при неверной длине номера счета."""
     return "Ошибка: неверное количество цифр (нужно 20)!"
 
 
 @pytest.fixture
 def input_argument_list() -> list[dict[str, Any]]:
+    """Возвращает базовый список транзакций с заполненными датами для проверки сортировки."""
     return [
         {"id": 414288290, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
         {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
@@ -45,7 +52,7 @@ def input_argument_list() -> list[dict[str, Any]]:
 
 @pytest.fixture
 def sample_transactions() -> list[dict[str, Any]]:
-    """Фикстура, возвращающая тестовый список транзакций."""
+    """Возвращает развернутый список разнообразных банковских операций для комплексных тестов."""
     return [
         {
             "id": 939719570,
@@ -94,31 +101,36 @@ def sample_transactions() -> list[dict[str, Any]]:
         },
     ]
 
+
 @pytest.fixture
-def sample_transactions_2():
+def sample_transactions_2() -> list[dict[str, Any]]:
+    """Возвращает список транзакций, содержащий операции с пропущенным полем description (None)."""
+    return [
+        {"id": 111, "state": "EXECUTED", "date": "2019-12-08", "description": "Перевод организации"},
+        {"id": 222, "state": "CANCELED", "date": "2023-05-10", "description": "Открытие вклада"},
+        {"id": 333, "state": "EXECUTED", "date": "2026-01-15", "description": "Перевод организации"},
+        {"id": 444, "state": "PENDING", "date": "2026-06-16", "description": None},
+    ]
+
+
+@pytest.fixture
+def mock_transactions() -> list[dict[str, Any]]:
+    """Локальная фикстура для подмены данных в тестах интерактивного интерфейса main."""
     return [
         {
-            "id": 111,
+            "id": 1,
             "state": "EXECUTED",
-            "date": "2019-12-08",
-            "description": "Перевод организации"
+            "date": "2019-12-08T22:46:21.931726",
+            "operationAmount": {"amount": "40542", "currency": {"name": "RUB", "code": "RUB"}},
+            "description": "Открытие вклада",
+            "to": "Счет 12345678901234564321",
         },
         {
-            "id": 222,
-            "state": "CANCELED",
-            "date": "2023-05-10",
-            "description": "Открытие вклада"
-        },
-        {
-            "id": 333,
+            "id": 2,
             "state": "EXECUTED",
-            "date": "2026-01-15",
-            "description": "Перевод организации"
+            "date": "2020-01-01T12:00:00.000000",
+            "operationAmount": {"amount": "100", "currency": {"name": "USD", "code": "USD"}},
+            "description": "Перевод валюты",
+            "to": "Счет 12345678901234567777",
         },
-        {
-            "id": 444,
-            "state": "PENDING",
-            "date": "2026-06-16",
-            "description": None  # Тест на пропущенное описание
-        }
     ]
