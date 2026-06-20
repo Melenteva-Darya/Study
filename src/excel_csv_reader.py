@@ -1,16 +1,14 @@
 import os
 from typing import Any
+from typing import Hashable
 
 import pandas as pd
-from pandas import DataFrame
 
 
-def read_csv_file(file_path_csv: str) -> DataFrame | list[Any]:
-    """Загружает CSV-файл в Pandas DataFrame.
-    Принимает как полный абсолютный путь, так и просто имя файла."""
+def read_csv_file(file_path_csv: str) -> list[Any] | list[dict[Hashable, Any]]:
+    """Загружает CSV-файл и возвращает список транзакций (словарей)."""
     if os.path.isfile(file_path_csv):
         final_path = file_path_csv
-
     else:
         current_script_dir = os.path.dirname(os.path.abspath(__file__))
         smart_dir = os.path.dirname(current_script_dir)
@@ -22,26 +20,23 @@ def read_csv_file(file_path_csv: str) -> DataFrame | list[Any]:
                 break
         else:
             # Этот блок сработает, только если цикл обошел всё и НЕ нашел файл
-            return pd.DataFrame()
+            return []
 
     try:
         transactions_file = pd.read_csv(final_path, encoding="utf-8")
-        return transactions_file
+        # Конвертируем DataFrame в список словарей и обрабатываем пустые значения (NaN) в пустые строки
+        transactions_file = transactions_file.fillna("")
+        return list(transactions_file.to_dict(orient="records"))
 
     except (FileNotFoundError, pd.errors.EmptyDataError, pd.errors.ParserError, LookupError) as e:
         print(f"Ошибка при чтении CSV-файла: {e}")
-        return pd.DataFrame()
-    # except Exception as e:
-    #     print(f"Непредвиденная ошибка: {e}")
-    #     return pd.DataFrame()
+        return []
 
 
-def read_excel_file(file_path_excel: str) -> DataFrame:
-    """Загружает Exel-файл в Pandas DataFrame.
-    Принимает как полный абсолютный путь, так и просто имя файла."""
+def read_excel_file(file_path_excel: str) -> list[Any] | list[dict[Hashable, Any]]:
+    """Загружает Excel-файл и возвращает список транзакций (словарей)."""
     if os.path.isfile(file_path_excel):
         final_path = file_path_excel
-
     else:
         current_script_dir = os.path.dirname(os.path.abspath(__file__))
         smart_dir = os.path.dirname(current_script_dir)
@@ -53,12 +48,14 @@ def read_excel_file(file_path_excel: str) -> DataFrame:
                 break
         else:
             # Этот блок сработает, только если цикл обошел всё и НЕ нашел файл
-            return pd.DataFrame()
+            return []
 
     try:
         transactions_file = pd.read_excel(final_path)
-        return transactions_file
+        # Конвертируем DataFrame в список словарей и обрабатываем пустые значения (NaN) в пустые строки
+        transactions_file = transactions_file.fillna("")
+        return list(transactions_file.to_dict(orient="records"))
 
     except (FileNotFoundError, ValueError, TypeError, ImportError) as e:
         print(f"Ошибка при чтении Excel-файла: {e}")
-        return pd.DataFrame()
+        return []

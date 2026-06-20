@@ -3,6 +3,7 @@ from src.masks import get_mask_card_number
 
 
 def mask_account_card(payment_method: str) -> str:
+    """Маскирует номер карты или счета в строке с названием платежного метода."""
     list_payment_method = payment_method.split(" ")
     list_result = []
     for method in list_payment_method:
@@ -25,6 +26,7 @@ def mask_account_card(payment_method: str) -> str:
 
 
 def get_date(iso_format: str) -> str:
+    """Преобразует строку даты из формата YYYY-MM-DD в формат DD.MM.YYYY с валидацией."""
     iso_format = iso_format.strip()
 
     if not iso_format:
